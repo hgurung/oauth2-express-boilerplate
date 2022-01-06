@@ -1,6 +1,8 @@
-## Sample Oauth2 Node Express Boilerplate
+## Description
 
-# Migration
+    Sample Oauth2 Node Express Boilerplate.
+
+## Migration
 
 ## Creating migration
 ```bash
@@ -17,7 +19,7 @@ npx sequelize-cli db:migrate
 npx sequelize-cli db:migrate:undo
 ```
 
-# SEEDERS
+## SEEDERS
 
 ## Creating Seed
 ```bash
@@ -29,14 +31,12 @@ npx sequelize-cli seed:generate --name name_of_seed
 npx sequelize-cli db:seed:all
 ```
 
-## Run single seed file
-
 ## Run any seeders file inside server/database/seeds using following commands
 ```bash
 npx sequelize-cli db:seed --seed `filename`
 ```
 
-# For project start
+## For project start
 
     - Clone the project from repo.
     - Configure database.json from sample-database.json (Currently we're using postgressql database).

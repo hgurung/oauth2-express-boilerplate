@@ -1,0 +1,229 @@
+definitions:
+  RegisterUser:
+    type: object
+    required:
+      - domain_id
+      - domain_code
+      - username
+      - role
+    properties:
+      username:
+        type: string
+        example: "harris123"
+      fullname:
+        type: string
+        example: "Harris Gurung"
+      role:
+        type: string
+        example: "admin, hr"
+  ForgotPassword:
+    type: object
+    required:
+      - domain_code
+      - username
+    properties:
+      username:
+        type: string
+        example: "harris123"
+  ForgotPasswordResponse:
+    type: object
+    properties:
+      token:
+        type: string
+        example: "VRTYBabb554d08f"
+  ResetPassword:
+    type: object
+    required:
+      - token
+      - password
+      - confirm-password
+    properties:
+      token:
+        type: string
+        example: "VRTYBabb554d08f"
+      password:
+        type: string
+        example: "p@$$w0rd"
+      confirm-password:
+        type: string
+        example: "p@$$w0rd"
+  PasswordToken:
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        type: string
+        example: "VRTYBabb554d08f"
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      username:
+        type: string
+        example: "example@example.com harris123"
+      fullname:
+        type: string
+        example: "John smith"
+      role:
+        type: string
+        example: "admin, hr"
+  UpdateUserPassword:
+    type: object
+    properties:
+      username:
+        type: string
+        example: "example@example.com harris123"
+      password:
+        type: string
+        example: "********"
+  UpdateUser:
+    type: object
+    properties:
+      username:
+        type: string
+        example: "example@example.com harris123"
+# Swagger routes
+/user/register:
+  post:
+    operationId: register
+    tags:
+      - users
+    summary: Register users.
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "body"
+        name: "body"
+        description: "Register new user"
+        required: true
+        schema:
+          $ref: "#/definitions/RegisterUser"
+    responses: 
+      200:
+        schema:
+          $ref: "#/definitions/User"
+        description: Success
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error
+/user/update-password:
+  post:
+    operationId: updateUserPassword
+    tags:
+      - users
+    summary: "Update users password"
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "body"
+        name: "body"
+        description: "Forgot password params"
+        required: true
+        schema:
+            $ref: "#/definitions/UpdateUserPassword"
+    responses: 
+      200:
+        description: Success
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error
+/user/forgot-password:
+  post:
+    operationId: forgotPassword
+    tags:
+      - users
+    summary: "Forgot user password"
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "body"
+        name: "body"
+        description: "Forgot password params"
+        required: true
+        schema:
+            $ref: "#/definitions/ForgotPassword"
+    responses: 
+      200:
+        description: Success
+        schema:
+          $ref: "#/definitions/ForgotPasswordResponse"
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error
+/user/validate-token:
+  get:
+    operationId: validateToken
+    tags:
+      - users
+    summary: "Validate token"
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "query"
+        name: "token"
+        description: "Token sent to users"
+        required: true
+    responses: 
+      200:
+        description: Success
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error
+/user/reset-password:
+  post:
+    operationId: resetPassword
+    tags:
+      - users
+    summary: "Reset user password"
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "body"
+        name: "body"
+        description: "Reset password params"
+        required: true
+        schema:
+            $ref: "#/definitions/ResetPassword"
+    responses: 
+      200:
+        description: Success
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error
+/user/update-user/{id}:
+  put:
+    operationId: updateUser
+    tags:
+      - users
+    summary: "Update user"
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "path"
+        name: "userId"
+        schema:
+            type: string
+        required: true
+      - in: "body"
+        name: "body"
+        description: "User update params"
+        required: true
+        schema:
+            $ref: "#/definitions/UpdateUser"
+    responses: 
+      200:
+        schema:
+          $ref: "#/definitions/User"
+        description: Success
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error

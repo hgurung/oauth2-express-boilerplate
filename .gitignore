@@ -1,0 +1,27 @@
+build
+node_modules/
+npm-debug.log
+yarn-error.log
+debug.txt
+log.*
+config.js
+images/
+public/
+server/config/database.json
+
+.DS_Store
+# Editors and IDEs
+.vscode
+!.vscode/snippets
+!.vscode/launch.json
+!.vscode/settings.json
+
+# For testing
+_*
+.cache
+*.csv
+avatar*.DS_Store
+
+# Config files
+.env
+database.json

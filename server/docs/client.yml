@@ -1,0 +1,143 @@
+definitions:
+  RegisterClient:
+    type: object
+    required:
+      - title
+      - permissions
+    properties:
+      title:
+        type: string
+        example: "Client1"
+      permissions:
+        type: array
+        example: ["permission1", "permission2"]
+  Client:
+    type: object
+    properties:
+      title:
+        type: string
+        example: "Client1"
+      permissions:
+        type: array
+        example: ["permission1", "permission2"]
+      client_id:
+        type: string
+        example: "UWFSTDQMMRed589c6f6a158590f963"
+      client_secret:
+        type: string
+        example: "HYTRYXLEVWMCGCTKUTANDOQGVQATLQOGCVIVGLYDAPQSEHJRPFBDRTFXCHNQGWVKbe022d58b4f9392ca37b40babef5b70c01328a8d8a5de9e06d5b1ff50f650dd05edc234df5bb042092bb7bf1d8c6ca8935b3374e57597704abcfc36350df3f43"
+  UpdateClient:
+    type: object
+    required:
+      - permissions
+    properties:
+      title:
+        type: string
+        example: "Client1"
+      permissions:
+        type: array
+        example: ["permission1", "permission2"]
+  ClientPermission:
+    type: object
+    properties:
+      client_id:
+        type: string
+        example: "UWFSTDQMMRed589c6f6a158590f963"
+      permissions:
+        type: array
+/client/register:
+  post:
+    operationId: register
+    tags:
+      - clients
+    summary: Register client.
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "body"
+        name: "body"
+        description: "Register new clients"
+        required: true
+        schema:
+          $ref: "#/definitions/RegisterClient"
+    responses: 
+      200:
+        schema:
+          $ref: "#/definitions/Client"
+        description: Success
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error
+/client/{id}:
+  get:
+    operationId: getClient
+    tags:
+      - clients
+    summary: "Get client data"
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "path"
+        name: "clientId"
+        schema:
+            type: string
+        required: true
+    responses: 
+      200:
+        description: Success
+        schema:
+          $ref: "#/definitions/Client"
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error
+  delete:
+    operationId: deleteClient
+    tags:
+      - clients
+    summary: "Delete client data"
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "path"
+        name: "clientId"
+        schema:
+            type: string
+        required: true
+    responses: 
+      200:
+        description: Success
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error
+  put:
+    operationId: updateClient
+    tags:
+      - clients
+    summary: "Update client"
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "path"
+        name: "clientId"
+        schema:
+            type: string
+        required: true
+      - in: "body"
+        name: "body"
+        description: "Client update params"
+        required: true
+        schema:
+            $ref: "#/definitions/UpdateClient"
+    responses: 
+      200:
+        description: Success
+        schema:
+          $ref: "#/definitions/ClientPermission"
+      default:
+        schema:
+          $ref: "#/definitions/Error"
+        description: Unexpected error
+

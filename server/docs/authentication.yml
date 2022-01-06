@@ -1,0 +1,82 @@
+definitions:
+  OAuth:
+    type: object
+    required:
+      - username
+      - password
+      - grant_type
+      - domain_code
+    properties:
+      username:
+        type: string
+        example: "example@example.com"
+      password:
+        type: string
+        example: "123123"
+      grant_type:
+        type: string
+        example: "password"
+  OAuthRefreshToken:
+    type: object
+    required:
+      - grant_type
+      - refresh_token
+    properties:
+      grant_type:
+        type: string
+        example: "password"
+      refresh_token:
+        type: string
+        example: "SAT9QRXvPdV3Ny9zEsUPRjpBxtCQGTbZApt9o8dzotjPSgWiTYB40SNKn5hy"
+  OAuthResponse:
+    type: object
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+      token_type:
+        type: string
+      expires_in:
+        type: string
+  Error:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          code:
+            type: integer 
+            example: 400
+          message:
+            type: string
+            example: "Bad request"
+          errorCode:
+            type: integer
+            example: 5003
+
+/auth/token:
+  post:
+    operationId: authLogin
+    tags:
+      - auth
+    summary: Login user.
+    parameters:
+      - $ref: '#/parameters/BasicAuthorization'
+        name: Authorization
+      - in: "body"
+        name: "body"
+        description: "Oauth2 parmater"
+        required: true
+        schema:
+          $ref: "#/definitions/OAuth"
+    responses: 
+      200:
+        schema:
+          $ref: "#/definitions/OAuthResponse"
+        description: Success
+      
+      default:
+        description: Unexpected error
+        schema:
+          $ref: "#/definitions/Error"

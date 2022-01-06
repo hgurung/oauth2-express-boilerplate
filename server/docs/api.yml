@@ -1,0 +1,123 @@
+definitions:
+  App:
+    title: App
+    type: object
+    properties:
+      app:
+        type: string
+      apiVersion:
+        type: string
+  Constants:
+    type: object
+    properties:
+      ERROR_NOT_FOUND:
+        type: integer
+        example: 5001
+      ERROR_MISSING_DATA:
+        type: integer
+        example: 5002
+      ERROR_INCORRECT_VALUE:
+        type: integer
+        example: 5003
+      ERROR_ACCOUNT_NOT_FOUND:
+        type: integer
+        example: 5004
+      ERROR_ACCOUNT_NOT_VERIFIED:
+        type: integer
+        example: 5005
+      ERROR_ENTITY_ALREADY_EXISTS:
+        type: integer
+        example: 5006
+      ERROR_USERNAME_PASSWORD_NOT_MATCHED:
+        type: integer
+        example: 5007
+      ERROR_CHANGE_PASSWORD_USING_PROVIDER_LOGIN:
+        type: integer
+        example: 5008
+      ERROR_TOKEN_NOT_VALID:
+        type: integer
+        example: 5009
+  Error:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
+          errorCode:
+            type: integer
+            optional: true
+  ValidationError:
+    allOf:
+      - title: ValidationError
+      - properties:
+          data:
+            type: object
+            title: Request Data
+          errors:
+            type: object
+            title: Field Errors
+            properties:
+              location: 
+                title: body | query
+                type: string
+              param: 
+                title: parameter name
+                type: string
+              msg: 
+                title: validation message
+                type: string
+
+parameters:
+  BasicAuthorization:
+    in: "header"
+    name: Authorization
+    schema:
+      type: "string"
+      example: "Basic c3R1ZHlkb3RlOnN0dWR5ZG90ZTEyMw=="
+    required: true
+    description: "Base 64 encoding clientId and clientSecret e.g 'base64function(clientId:clientSecret)' => 'Basic c3R1ZHlkb3RlOnN0dWR5ZG90ZTEyMw=='"
+  Authorization:
+    in: "header"
+    name: Authorization
+    schema:
+      type: "string"
+      example: "Bearer e3gCYqRsiawOaGEtBCMHW0pc3xrs40EDOAkMomIrs2OVij2EkbN7TtBA0cvvZpzN6MEKN1A8NO2KWjrew3K2uzdUCBkDHNUBMskWVB2QsoeBnca6C5we5Y6od19LQvFLJ6udeNanXYzU5sSJ2NxQGnBI3U26GKG8d0Fw8X9i8xfS9oUZj97kMcpkti9PElKYik3S2k3WYu5v7qaqCgCSg9FQeKCrGKMQyQ4hyjuMT5GfuiBSZokMuRi2rpcpzDL"
+    required: true
+    description: "Access token provided after login"
+  OffsetParam:  
+    in: query
+    name: offset
+    required: false
+    type: integer
+    minimum: 0
+    default: 0
+    description: The number of items to skip before starting to collect the result set.
+  LimitParam:
+    in: query
+    name: limit
+    required: false
+    type: integer
+    minimum: 1
+    maximum: 50
+    default: 20
+    description: The numbers of items to return.
+
+/:
+  get:
+    summary: Get API version
+    description: App version
+    produces:
+      - application/json
+    tags:
+      - Base
+    responses:
+      200:
+        description: Application and API version
+        schema:
+          title: Users
+          type: object
+          $ref: '#/definitions/App'

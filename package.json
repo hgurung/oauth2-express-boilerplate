@@ -1,0 +1,59 @@
+{
+  "name": "oauth2-express-boilerplate",
+  "version": "0.1.0",
+  "description": "oauth2-express-boilerplate api endpoint",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "clean": "if exist node_modules rmdir node_modules /s /q",
+    "precommit-msg": "echo 'Checking files for possible flaws in coding standards.....'",
+    "lint": "eslint --fix --ignore-path .gitignore .",
+    "replace": "gulp replace",
+    "todo": "gulp todo"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "repository": "https://github.com/hgurung/oauth2-express-boilerplate",
+  "author": "harris <h.gurung1@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@hapi/boom": "^9.0.0",
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.5.1",
+    "express-throttle": "^2.0.0",
+    "express-validator": "^6.3.1",
+    "helmet": "^3.21.2",
+    "http-status-codes": "^1.4.0",
+    "ip": "^1.1.5",
+    "lodash": "^4.17.15",
+    "mocha": "^8.1.1",
+    "moment": "^2.24.0",
+    "oauth2orize": "^1.11.0",
+    "on-headers": "^1.0.2",
+    "passport": "^0.4.1",
+    "passport-http": "^0.3.0",
+    "passport-http-bearer": "^1.0.1",
+    "password-generator": "^2.2.3",
+    "pg": "^8.6.0",
+    "promise": "^8.0.3",
+    "rate-limiter-flexible": "^2.1.10",
+    "redis": "^3.0.2",
+    "sequelize": "^6.6.2",
+    "swagger-jsdoc": "^3.5.0",
+    "swagger-ui-dist": "^3.25.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "husky": "4",
+    "nodemon": "^2.0.9",
+    "sequelize-cli": "^6.2.0"
+  }
+}

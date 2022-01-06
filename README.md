@@ -1,4 +1,4 @@
-# api
+# Sample Oauth2 Node Express Boilerplate
 
 # Creating migration
 npx sequelize-cli migration:create --name name_of_migration
